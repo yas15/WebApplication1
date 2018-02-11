@@ -1,0 +1,44 @@
+﻿@model Restaurant
+
+@{
+    // To the ViewBag object add the property Title and sets it's value to "Create"
+    // this ViewBag property will now be available to the other views in our application.
+    ViewBag.Title = "Create";
+}
+
+
+<h1>Create</h1>
+
+@*The HTML <form> element defines a form that is used to collect user input. The attribute
+    method="post", specifies that when the user clicks the submit button on the form,
+    the form will create a Http post message and post the form data back to the server.
+    We are not specifying the 'action' attribute of this tag i.e. the method to send and post
+    the form-data to when the form is submitted, this is because by default a form will alway
+    post back to the same URL that is came from, i.e. the same controller action. *@
+<form method="post">
+
+
+    <div>
+        <label asp-for="Name"></label>
+
+        @*To the html input element we have added the ASP.NET MVC tag helper [asp-for] and specified
+            the "Name" property i.e. MVC will create an input element in our form for the "Name"
+            property of the Model (i.e. class) specified for this page. *@
+        <input asp-for="Name" />
+
+        <span asp-validation-for="Name"></span>
+
+    </div>
+
+
+    <div>
+        <label asp-for="Cuisine"></label>
+        <select asp-for="Cuisine" asp-items="@Html.GetEnumSelectList<CuisineType>()"></select>
+        <span asp-validation-for="Cuisine"></span>
+
+    </div>
+
+    @* An input type of 'submit' *@
+    <input type="submit" name="save" value="Save!" />
+
+</form>

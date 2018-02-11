@@ -1,0 +1,25 @@
+﻿@* To get IntelliSense for the Model object we use a directive.
+    The @model directive specifies the type of the model passed to the Razor page.
+    We will be passing the class WebApplication1.Models.Restaurant
+    as the model parameter for this view *@
+
+@model Restaurant
+
+
+@{
+    // To the ViewBag object add the property Title and sets it's value to "Details"
+    // this ViewBag property will now be available to the other views in our application.
+    ViewBag.Title = Model.Name;
+}
+
+<h1>"This is the Details View"</h1>
+
+<h1> @Model.Name</h1>
+
+<div> ID:  @Model.Id</div>
+
+<div> Cuisine: @Model.Cuisine </div>
+
+
+@*See notes on Tag Helpers*@
+<a asp-action="Index" asp-controller="Home">Home</a>

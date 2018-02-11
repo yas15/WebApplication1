@@ -1,0 +1,54 @@
+﻿@* All ASP.Net MVC Views must be contained in the folder /Views*@
+
+@* Razor syntax commenting *@
+
+@* Razor syntax allows to add server code on a ASP.NET web appliaction (i.e. C# code
+    that is executed on the server, that returns HTML that is rendered by the web browser.
+    Razor variables & functions just start with an [@] and all C# code blocks are enclosed in @{ ... } *@
+
+@* The _layout.cshtml file from views/Shared folder, will be used as a standard layout for all the pages in the project. *@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    @*ASP.NET MVC offers us three options for passing data from a controller to a view: ViewData, ViewBag and TempData.
+        ViewData is a dictionary object that you can use to pass data from the controller to a view and from a view to a view.
+        The ViewBag object is a wrapper around the ViewData object, ViewBag is a dynamic type object meaning
+        we can add a property of ANY TYPE to it in the controller or another view, and then access it in our view *@
+
+    @*ViewBag.Title is reading the property Title from the Viewbag object *@
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+
+        @*RenderBody is called to render the content of a child view.
+            Any content on said view that is not in a @section will be rendered by RenderBody.*@
+
+
+        @* Every _layout.cshtml file needs to contain a single call to  @RenderBody(),
+            The RenderBody() method renders the content of our actual view. SO we need to
+            place it where we want the view to be.*@
+        @RenderBody()
+    </div>
+    <footer>
+
+        @*Remember that all C# code in a .cshtml file is preceded by an [@] symbol *@
+        @DateTime.Now.Year
+
+
+        @* The RenderSection() method allows us to add another section in our layout in which we can add a view. 
+            The first parameter to the “RenderSection()” helper method specifies the name of the section in the 
+            0layout template. The second parameter is optional, and allows us to define whether the section 
+            we are rendering is required or not. If a section is “required”, then Razor will throw an error 
+            at runtime if that section is not implemented within a view template. *@
+
+        @* If we create a section called "footer" in any of our views, it will be displayed here*@
+        @RenderSection("footer", required: false)
+
+    </footer>
+</body>
+</html>

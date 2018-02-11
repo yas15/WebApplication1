@@ -1,0 +1,77 @@
+﻿@* All ASP.Net MVC Views must be contained in the folder /Views*@
+
+@* Razor syntax commenting *@
+
+@* Razor syntax allows to add server code on a ASP.NET web appliaction (i.e. C# code
+    that is executed on the server, that returns HTML that is rendered by the web browser.
+    Razor C# code blocks are enclosed in @{ ... }, and variables & functions just start with an [@] *@
+
+
+@* To get IntelliSense for the Model object we use a directive
+    The @model directive specifies the type of the model we will be passing to the Razor page.
+    we will be passing an IEnumerable<WebApplication1.Models.Restaurant>
+    e.g. List<Restaurant> - list of Restaurant type objects *@
+
+@model HomeIndexViewModel
+
+@{
+    // To the ViewBag object add the property Title and sets it's value to "Home"
+    // this ViewBag property will now be available to the other views in our application.
+
+    ViewBag.Title = "Home";
+
+    // The Layout property of the view, determines which Layout we will use for the view
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+@* we have removed the tags <head> and <body> from this view,
+    these will now be pulled from the view _Layout.cshtml *@
+
+
+<h1> Hello from the Restaurants List view!</h1>
+
+@* Razor C# code blocks are enclosed in @{ ... }, however variables and functions just start with @ *@
+<h3>All Restaurants</h3>
+<table>
+
+    @foreach (var restaurant in Model.Restaurants)
+    {
+        // <tr>: The Table Row element
+        <tr>
+
+            @* <td>: The Table Data Cell element*@
+            <td>
+
+
+                @* The HTML <a> element (anchor element) creates a hyperlink to other web pages,
+                    files, locations or any other URL.*@
+                <a href="/home/details/@restaurant.Id">Details</a>
+
+                @* ActionLink() Returns an anchor (<a>) element that contains a URL path to the specified action.*@
+                @Html.ActionLink("A string goes here e.g. View", "Details", new { id = restaurant.Id })
+
+                @*See notes on Tag Helpers*@
+                <a asp-action="Details" asp-route-id="@restaurant.Id">More</a>
+            </td>
+            <td>@restaurant.Name</td>
+        </tr>
+    }
+</table>
+
+@*The HTML <a> element (anchor tag) creates a hyperlink to web pages, files, locations, or any other URL.
+    we use the ASP.NET Core Tag Helper [asp-action] to set the href attribute (i.e. the link's destination)
+    of the anchor tag to the [Create] action (i.e. method in ASP.NET MVC), however we have not specified the
+    Controller (i.e. class in ASP.NET MVC) to look for this method. But since we have in the MapRoute() method
+    of the Startup class, the defualt {controller=Home}, the runtime will look at this controller
+    i.e. HomeController for the [Create] action.
+    We are displaying the 'Add Restaurant' in the link *@
+<a asp-action="Create">Add Restaurant</a>
+
+
+@*In the footer section of our Layout add the following variable*@
+@section footer{
+
+    <h3>@Model.CurrentMessage</h3>
+}
